@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:pomodoro/provider/pomodoro_timer.dart';
 
@@ -11,12 +12,16 @@ class PomodoroScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Pomodoro Timer'),
         centerTitle: true,
+        backgroundColor: Colors.grey[600],
       ),
-      backgroundColor: Colors.purpleAccent[800],
+      backgroundColor: Colors.grey[600],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
+            Lottie.asset('lib/assets/timer.json',
+            height: 80,
+            width: 200),
             TimerDisplay(),
             SizedBox(height: 20),
             TimerControls(),
@@ -38,17 +43,35 @@ class TimerDisplay extends StatelessWidget {
       builder: (context, timer, child) {
         final minutes = (timer.timeLeft ~/ 60).toString().padLeft(2, '0');
         final seconds = (timer.timeLeft % 60).toString().padLeft(2, '0');
-        return Column(
-          children: [
-            Text(
-              timer.currentMode == TimerMode.work ? 'Work Time' : 'Break Time',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Text(
-              '$minutes:$seconds',
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-          ],
+        return Container(
+          padding: EdgeInsets.all(20),
+          width: 300,
+          height: 200,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.grey
+          ),
+          child: Column(
+            children: [
+              Text(
+                timer.currentMode == TimerMode.work ? 'Work Time' : 'Break Time',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.italic,
+                )
+                //Theme.of(context).textTheme.titleLarge,
+              ),
+              Text(
+                '$minutes:$seconds',
+                style:TextStyle(
+                  fontSize: 40,
+                  fontWeight:FontWeight.bold
+                )
+                // Theme.of(context).textTheme.headlineLarge,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -62,24 +85,47 @@ class TimerControls extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<PomodoroTimer>(
       builder: (context, timer, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: timer.isRunning ? null : timer.startTimer,
-              child: const Text('Start'),
-            ),
-            const SizedBox(width: 20),
-            ElevatedButton(
-              onPressed: timer.isRunning ? timer.stopTimer : null,
-              child: const Text('Stop'),
-            ),
-            const SizedBox(width: 20),
-            ElevatedButton(
-              onPressed: timer.resetTimer,
-              child: const Text('Reset'),
-            ),
-          ],
+        return Container(
+          padding: EdgeInsets.all(12),
+          width: 300,
+          height: 70,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.grey
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(onPressed: timer.isRunning ? null : timer.startTimer,
+               icon: Icon(Icons.play_circle_filled,
+               color: Colors.pink[600],
+               size: 35,)),
+              // ElevatedButton(
+              //   onPressed: timer.isRunning ? null : timer.startTimer,
+              //   child: const Text('Start'),
+              // ),
+              const SizedBox(width: 20),
+              IconButton(onPressed:  timer.isRunning ? timer.stopTimer : null,
+               icon:Icon(Icons.stop_circle_sharp,
+               size: 35,
+               color: Colors.pink[600],)),
+          
+              // ElevatedButton(
+              //   onPressed: timer.isRunning ? timer.stopTimer : null,
+              //   child: const Text('Stop'),
+              // ),
+              const SizedBox(width: 20),
+              IconButton(onPressed: timer.resetTimer,
+               icon:Icon(Icons.repeat_sharp,
+               color: Colors.pink[600],
+               size: 35,)),
+          
+              // ElevatedButton(
+              //   onPressed: timer.resetTimer,
+              //   child: const Text('Reset'),
+              // ),
+            ],
+          ),
         );
       },
     );
