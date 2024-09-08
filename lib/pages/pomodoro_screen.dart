@@ -12,9 +12,9 @@ class PomodoroScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Pomodoro Timer'),
         centerTitle: true,
-        backgroundColor: Colors.grey[600],
+       
       ),
-      backgroundColor: Colors.grey[600],
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +49,7 @@ class TimerDisplay extends StatelessWidget {
           height: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.grey
+            color: Colors.grey[200]
           ),
           child: Column(
             children: [
@@ -91,7 +91,7 @@ class TimerControls extends StatelessWidget {
           height: 70,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Colors.grey
+            color: Colors.grey[200]
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
